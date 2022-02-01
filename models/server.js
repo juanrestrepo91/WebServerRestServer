@@ -9,7 +9,7 @@ class Server {
         this.usuariosPath = '/api/usuarios/';
 
         this.middleware ();
-        this.router (); 
+        this.routes (); 
     }
 
     middleware () {
@@ -21,7 +21,7 @@ class Server {
         this.app.use ( express.static ('public'));
     }
 
-    router () {
+    routes () {
     
         this.app.use (this.usuariosPath, require ('../routers/user.js'));
     }
