@@ -23,7 +23,20 @@ const usuarioSchema = Schema ({
         type: String,
         required: true,
         emun: ['ADMIN_ROLE', 'USER_ROLE']
+    },
+    estado: {
+        type: Boolean,
+        default: true
+    },
+    google: {
+        type: Boolean,
+        default: false
     }
 });
 
-module.exports = model ('Usuarios', usuarioSchema);
+usuarioSchema.methods.toJSON = function () {
+    const { __v, password, ...usuario } = this.toObject ();
+    return usuario;
+}
+
+module.exports = model ('Usuario', usuarioSchema);
