@@ -31,14 +31,21 @@ const usuarioPost = async (req = request, res = response) => {
     res.json({ usuario });
 };
 
-const usuarioPut = (req = request, res = response) => {
+const usuarioPut = async (req = request, res = response) => {
 
     const { id } = req.params;
 
-    res.json({
-        msg: 'put API - Controller ',
-        identificacion: id
-    });
+    const { _id, password, google, ...resto } = req.body;
+
+    if (password) {
+
+        const salt = bcryptjs.genSaltSync ();
+        resto.password = bcryptjs.hashSync (password, salt);
+    }
+
+    const actualiza = await Usuario.findByIdAndUpdate (id, resto);
+
+    res.json({actualiza});
 };
 
 const usuarioDel = (req, res) => {
