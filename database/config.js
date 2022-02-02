@@ -4,9 +4,8 @@ const mongodb = require ('mongoose');
 
 const dbConnection = async () => {
     try {
-        console.log (process.env.MONGODB);
+
         await mongodb.connect (process.env.MONGODB, {
-        // await mongodb.connect ('mongodb+srv://user_cafe_nodejs:DiIbwgk3WTJVa8Jy@cafedbnodejs.kprsf.mongodb.net/cafedb', {
              useNewUrlParser: true
         });
         
