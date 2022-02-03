@@ -7,9 +7,8 @@ const validarJwt = async (req = request, res = response, next) => {
     
     const token = req.header ('x-token');
 
-        if (!token) {
-            return res.status (401).json ({ msg: 'No se encontró token en la petición' });   
-        }
+        if (!token)
+            return res.status (401).json ({ msg: 'No se encontró token en la petición' });
 
     try {
 
@@ -25,11 +24,19 @@ const validarJwt = async (req = request, res = response, next) => {
             return res.status (401).json ({ msg: 'Usuario con estado inactivo' });
         }
 
+        const { id } = req.params;
+        const usuarioupdt = await Usuario.findById (id);
+
+        if (!usuarioupdt.estado) {
+            return res.status (401).json ({ msg: 'El usuario ya se encuentra inactivo' });
+        }
+
         req.usuario = usuarioAuth;
 
         next ();
         
     } catch (error) {
+        console.log (error);
         return res.status (401).json ({ msg: 'Token no valido' });
     }
 }
