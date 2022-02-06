@@ -32,11 +32,15 @@
 
 	<script>
 		function handleCredentialResponse(response) {
-		   // decodeJwtResponse() is a custom function defined by you
-		   // to decode the credential response.
+
 		   const token = { id_token: response.credential };
 
-		   fetch ('https://restserver-cursonode-jsrr.herokuapp.com/api/auth/google', {
+		   console.log (window.location.hostname);
+		   const url = window.location.hostname.includes ('localhost') 
+				? `http://${window.location.host}/api/auth/google`
+				: `https://${window.location.host}/api/auth/google`;
+
+		   fetch ('http://localhost:8100/api/auth/google', {
 			   method: 'POST',
 			   headers: {'Content-Type': 'application/json'
 			},
