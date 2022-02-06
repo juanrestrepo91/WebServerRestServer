@@ -24,12 +24,12 @@ const validarJwt = async (req = request, res = response, next) => {
             return res.status (401).json ({ msg: 'Usuario con estado inactivo' });
         }
 
-        const { id } = req.params;
-        const usuarioupdt = await Usuario.findById (id);
+        // const { id } = req.params;
+        // const usuarioupdt = await Usuario.findById (id);
 
-        if (!usuarioupdt.estado) {
-            return res.status (401).json ({ msg: 'El usuario ya se encuentra inactivo' });
-        }
+        // if (!usuarioupdt.estado) {
+        //     return res.status (401).json ({ msg: 'El usuario ya se encuentra inactivo' });
+        // }
 
         req.usuario = usuarioAuth;
 
