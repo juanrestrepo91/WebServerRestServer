@@ -40,7 +40,7 @@
 				? `http://${window.location.host}/api/auth/google`
 				: `https://${window.location.host}/api/auth/google`;
 
-		   fetch ('http://localhost:8100/api/auth/google', {
+		   fetch (url, {
 			   method: 'POST',
 			   headers: {'Content-Type': 'application/json'
 			},
