@@ -3,12 +3,15 @@ const express = require('express');
 const fileUpload = require ('express-fileupload');
 
 const { dbConnection } = require ('../database/config');
+const { socketController } = require ('../sockets/controller');
 
 class Server {
 
     constructor () {
         this.app  = express ();
         this.port = process.env.PORT;
+        this.server = require('http').createServer(this.app);
+        this.io = require('socket.io')(this.server);
 
         this.path = {
             auth:       '/api/auth/',
@@ -21,7 +24,8 @@ class Server {
 
         this.conectarBD ();
         this.middleware ();
-        this.routes (); 
+        this.routes ();
+        this.sockets ();
     }
 
     async conectarBD () {
@@ -44,8 +48,12 @@ class Server {
         this.app.use (this.path.upload, require ('../routers/upload'));
     }
 
+    sockets () {
+        this.io.on('connection', (socket) => { socketController ( socket, this.io ) });
+    }
+
     listen () {
-        this.app.listen(this.port, ()=> {
+        this.server.listen(this.port, ()=> {
             console.log ('Servidor arriba escuchando en el puerto: ', this.port);
         });
     }

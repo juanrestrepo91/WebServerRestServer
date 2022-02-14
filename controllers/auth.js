@@ -32,7 +32,7 @@ const login = async (req = request, res = response) => {
         res.json({
             usuario,
             token
-        });  
+        });
 
     } catch (error) {
         return res.status(500).json ({ msg: 'Error del servidor '});
@@ -82,4 +82,14 @@ const loginGoogle = async (req = request, res = response) => {
 
 }
 
-module.exports = { login, loginGoogle }
+const renovarToken = async (req = request, res = response) => {
+
+    const { usuario } = req;
+
+    const token = await generarJwt (usuario.id);
+
+    res.json ({usuario, token});
+
+}
+
+module.exports = { login, loginGoogle, renovarToken }
